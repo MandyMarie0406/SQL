@@ -1,0 +1,104 @@
+/* Which tracks appeared in the most playlists? how many playlist did they appear in?*/
+SELECT
+tracks.name
+,count(*) "total"
+FROM
+playlist_track
+JOIN playlists
+	on playlist_track.PlaylistId = playlists.PlaylistId
+JOIN tracks 
+	ON playlist_track.TrackId = tracks.TrackId
+GROUP BY tracks.TrackId
+ORDER BY "total" desc
+LIMIT 100;	
+
+/* Which album generated the most revenue? */
+SELECT
+tracks.Name
+,sum(invoice_items.UnitPrice) as "revenue"
+FROM
+tracks 
+JOIN invoice_items
+	ON tracks.TrackId = invoice_items.TrackId
+JOIN albums 
+	ON tracks.AlbumId = albums.AlbumId
+GROUP BY tracks.TrackId	
+ORDER BY "revenue" DESC
+LIMIT 1;
+	
+/* Which album generated the most revenue? */
+SELECT
+albums.Title
+,sum(invoice_items.UnitPrice) as "revenue"
+FROM
+tracks 
+JOIN invoice_items
+
+/* Which genre generated the most revenue? */
+SELECT
+genres.Name
+,round(sum(invoice_items.UnitPrice),2) as "revenue"
+FROM
+tracks 
+JOIN invoice_items
+	ON tracks.TrackId = invoice_items.TrackId
+JOIN albums 
+	ON tracks.AlbumId = albums.AlbumId
+JOIN genres
+	ON tracks.GenreId = genres.GenreId
+GROUP BY tracks.GenreId	
+ORDER BY "revenue" DESC
+LIMIT 1;
+	ON tracks.TrackId = invoice_items.TrackId
+JOIN albums 
+	ON tracks.AlbumId = albums.AlbumId
+GROUP BY albums.AlbumId	
+ORDER BY "revenue" DESC
+LIMIT 1;
+
+/* Which genre generated the most revenue? */
+SELECT
+genres.Name
+,round(sum(invoice_items.UnitPrice),2) as "revenue"
+FROM
+tracks 
+JOIN invoice_items
+	ON tracks.TrackId = invoice_items.TrackId
+JOIN albums 
+	ON tracks.AlbumId = albums.AlbumId
+JOIN genres
+	ON tracks.GenreId = genres.GenreId
+GROUP BY tracks.GenreId	
+ORDER BY "revenue" DESC
+LIMIT 1;
+
+/*Which countries have the highest sales revenue?  */
+SELECT
+customers.Country
+,round(sum(invoice_items.UnitPrice),2) "revenue"
+
+FROM
+customers
+JOIN invoices 
+	ON customers.CustomerId = invoices.CustomerId
+JOIN invoice_items
+	ON invoices.InvoiceId = invoice_items.InvoiceId
+GROUP BY customers.Country
+ORDER BY "revenue" DESC
+LIMIT 5;
+
+/*Which countries have the highest sales revenue?  */
+With AS Rev_by_Country (SELECT
+customers.Country
+,round(sum(invoice_items.UnitPrice),2) "revenue"
+
+FROM
+customers
+JOIN invoices 
+	ON customers.CustomerId = invoices.CustomerId
+JOIN invoice_items
+	ON invoices.InvoiceId = invoice_items.InvoiceId
+GROUP BY customers.Country
+ORDER BY "revenue" DESC
+LIMIT 5;
+)
